@@ -1,0 +1,35 @@
+//
+//  HomeDetailController.m
+//  BasicFramework
+//
+//  Created by luoty on 2019/5/24.
+//  Copyright © 2019 luoty. All rights reserved.
+//
+
+#import "HomeDetailController.h"
+
+@interface HomeDetailController ()
+
+@end
+
+@implementation HomeDetailController
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    // Do any additional setup after loading the view.
+    self.navBar.backgroundColor = [UIColor brownColor];
+    
+    self.navBar.navTitle = @"fsdfsa";
+}
+
+/*
+#pragma mark - Navigation
+
+// In a storyboard-based application, you will often want to do a little preparation before navigation
+- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
+}
+*/
+
+@end
