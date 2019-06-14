@@ -25,6 +25,8 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)reloadNavigationBar;
 
+- (void)removeNavBar;
+
 @end
 
 NS_ASSUME_NONNULL_END

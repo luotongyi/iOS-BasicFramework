@@ -55,6 +55,7 @@ NS_ASSUME_NONNULL_BEGIN
  */
 - (void)handleJS:(NSString *)js wkWebView:(WKWebView *)web completionHandler:(nonnull void (^)(id _Nullable response))completion;
 
+@property (nonatomic, copy  )   NSString *webTitle;
 
 @end
 

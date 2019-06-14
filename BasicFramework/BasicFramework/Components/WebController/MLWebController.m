@@ -121,29 +121,15 @@
 #pragma mark - 加载返回、刷新按钮
 - (void)createBarItems
 {
-    UIButton *backBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [backBtn setTitle:@"返回" forState:UIControlStateNormal];
-    [backBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [backBtn setImageEdgeInsets:UIEdgeInsetsMake(0, -10, 0, 10)];
-    [backBtn addTarget:self action:@selector(goWebHistory) forControlEvents:UIControlEventTouchUpInside];
-    
-    UIButton *closeBtn = [[UIButton alloc]initWithFrame:CGRectMake(0, 0, 44, 44)];
-    [closeBtn setTitle:@"关闭" forState:UIControlStateNormal];
-    [closeBtn setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
-    [closeBtn setImageEdgeInsets:UIEdgeInsetsMake(0, 15, 0, -15)];
-    [closeBtn addTarget:self action:@selector(popController) forControlEvents:UIControlEventTouchUpInside];
-    
-    //适配iOS 11
-    if (@available(iOS 11.0,*)) {
-        [backBtn setContentMode:UIViewContentModeScaleToFill];
-        [backBtn setContentEdgeInsets:UIEdgeInsetsMake(0, 5, 5, 20)];
-        
-        [closeBtn setContentMode:UIViewContentModeScaleToFill];
-        [closeBtn setContentEdgeInsets:UIEdgeInsetsMake(0, 5, 5, 20)];
+    ML_WEAK_SELF(weakSelf)
+    MLNavBarItem *backItem = [MLNavBarItem new];
+    [backItem setItemHandler:^{
+        [weakSelf goWebHistory];
+    }];
+    backItem.itemImage = [UIImage imageNamed:@"icon_home_"];
+    if (self.navigationController.viewControllers.count > 1) {
+        [self.navBar addLeftItems:@[backItem]];
     }
-    
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:backBtn];
-    self.navigationItem.rightBarButtonItem = [[UIBarButtonItem alloc]initWithCustomView:closeBtn];
 }
 
 #pragma -mark 加载等待框
@@ -294,7 +280,9 @@
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
     [self stopLoding];
-    self.title = webView.title;
+    if (!self.webTitle) {
+        self.navBar.navTitle = webView.title;
+    }
 }
 
 #pragma -mark WKScriptMessageHandler
