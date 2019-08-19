@@ -84,6 +84,8 @@
     btn5.backgroundColor = [UIColor blueColor];
     
     [self testReqeust];
+    
+//    self.enableGesture = NO;
 }
 
 - (void)testReqeust{
@@ -93,7 +95,7 @@
 }
 
 - (void)pushView{
-    [self.navigationController pushViewController:[HomeController new] animated:YES];
+    [self.navigationController pushViewController:[MineController new] animated:YES];
 }
 
 - (void)pushView1{

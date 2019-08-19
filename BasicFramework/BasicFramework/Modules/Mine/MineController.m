@@ -18,12 +18,25 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
-    UIView *aa = [[UIView alloc]initWithFrame:CGRectMake(10, 90, 50, 50)];
-    aa.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:aa];
+    UIButton *btn1 = [[UIButton alloc]initWithFrame:CGRectMake(50, 250, 50, 50)];
+    btn1.backgroundColor = [UIColor redColor];
+    [btn1 addTarget:self action:@selector(poView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn1];
+    
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(50, 150, 50, 50)];
+    btn.backgroundColor = [UIColor redColor];
+    [btn addTarget:self action:@selector(pushView) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
     
 }
 
+- (void)pushView{
+    [self.navigationController pushViewController:[MineController new] animated:YES];
+}
+
+- (void)poView{
+    [self.navigationController popViewControllerAnimated:YES];
+}
 
 /*
 #pragma mark - Navigation

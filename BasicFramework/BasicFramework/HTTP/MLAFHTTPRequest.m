@@ -8,6 +8,7 @@
 
 #import "MLAFHTTPRequest.h"
 #import "SVProgressHUD.h"
+#import "MLHTTPCache.h"
 
 @interface MLSessionManager : AFHTTPSessionManager
 
@@ -49,23 +50,21 @@
         [SVProgressHUD show];
     }
     
+    NSString *urlPath = [item.serverUrl stringByAppendingString:item.functionPath];
     id requestParams = item.requestParams ? item.requestParams : @{};
+    
+    
     if (item.encrypt) {
         //请求参数加密
         
     }
-    
     MLSessionManager *manager = [MLSessionManager sharedInstance];
     if (item.headerParams.count > 0)
     {
-        NSArray *cookieKey = item.headerParams.allKeys;
-        for (NSString *key in cookieKey)
-        {
-            [manager.requestSerializer setValue:ML_STRING_FORMAT(item.headerParams[key]) forHTTPHeaderField:key];
-        }
+        [item.headerParams enumerateKeysAndObjectsUsingBlock:^(id  _Nonnull key, id  _Nonnull obj, BOOL * _Nonnull stop) {
+            [manager.requestSerializer setValue:ML_STRING_FORMAT(obj) forHTTPHeaderField:key];
+        }];
     }
-    NSString *urlPath = [item.serverUrl stringByAppendingString:item.functionPath];
-    
     switch (item.requestMethod) {
         case MLHTTP_GET:
         {
