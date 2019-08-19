@@ -56,25 +56,38 @@
         case MLCacheDataDontLoad:
         {
             //有缓存就用缓存，没有缓存就不发请求
-            return;
+//            id object = [MLHTTPCache getHTTPCache:urlPath parameters:requestParams];
+//            if (object) {
+//                success(nil, object);
+//            }
+//            else{
+//                failure(nil, @{});
+//            }
+//            return;
         }
             break;
         case MLCacheDataElseLoad:
         {
             //有缓存就用缓存，没有缓存就重新请求
-            return;
+//            id object = [MLHTTPCache getHTTPCache:urlPath parameters:requestParams];
+//            if (object) {
+//                success(nil, object);
+//                return;
+//            }
         }
             break;
         case MLCacheDataThenLoad:
         {
             //有缓存先读取缓存，继续请求
+//            id object = [MLHTTPCache getHTTPCache:urlPath parameters:requestParams];
+//            if (object) {
+//                success(nil, object);
+//            }
         }
             break;
         case MLIgnoringLocalCacheData:
         default:
-        {
             //忽略缓存数据直接请求
-        }
             break;
     }
     
