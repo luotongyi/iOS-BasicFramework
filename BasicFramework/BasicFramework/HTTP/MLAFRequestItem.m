@@ -17,6 +17,7 @@
         _timeInterval = 20;
         _serverUrl = @"";
         _functionPath = @"";
+        _cacheType = MLIgnoringLocalCacheData;
         _requestParams = nil;
         _headerParams = @{};
         _requestMethod = MLHTTP_POST;

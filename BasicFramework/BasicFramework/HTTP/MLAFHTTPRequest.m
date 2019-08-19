@@ -52,7 +52,31 @@
     
     NSString *urlPath = [item.serverUrl stringByAppendingString:item.functionPath];
     id requestParams = item.requestParams ? item.requestParams : @{};
-    
+    switch (item.cacheType) {
+        case MLCacheDataDontLoad:
+        {
+            //有缓存就用缓存，没有缓存就不发请求
+            return;
+        }
+            break;
+        case MLCacheDataElseLoad:
+        {
+            //有缓存就用缓存，没有缓存就重新请求
+            return;
+        }
+            break;
+        case MLCacheDataThenLoad:
+        {
+            //有缓存先读取缓存，继续请求
+        }
+            break;
+        case MLIgnoringLocalCacheData:
+        default:
+        {
+            //忽略缓存数据直接请求
+        }
+            break;
+    }
     
     if (item.encrypt) {
         //请求参数加密
@@ -73,6 +97,10 @@
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 //请求结束，等待框消失，数据返回给上层
                 [SVProgressHUD dismiss];
+                //缓存数据
+//                if (responseObject) {
+//                    [MLHTTPCache setHTTPCache:responseObject url:urlPath parameters:requestParams];
+//                }
                 success(task, responseObject);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 //请求结束，等待框消失，数据返回给上层
@@ -89,6 +117,10 @@
             } success:^(NSURLSessionDataTask * _Nonnull task, id  _Nullable responseObject) {
                 //请求结束，等待框消失，数据返回给上层
                 [SVProgressHUD dismiss];
+                //缓存数据
+//                if (responseObject) {
+//                    [MLHTTPCache setHTTPCache:responseObject url:urlPath parameters:requestParams];
+//                }
                 success(task, responseObject);
             } failure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
                 //请求结束，等待框消失，数据返回给上层

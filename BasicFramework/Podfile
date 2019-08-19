@@ -13,6 +13,6 @@ target 'BasicFramework' do
   pod 'SVProgressHUD', '~> 2.2.5'
   pod 'JSONModel', '~> 1.8.0'
   pod 'Masonry', '~> 1.1.0'
-  
+  pod 'YYCache', '~> 1.0.4'
   
 end

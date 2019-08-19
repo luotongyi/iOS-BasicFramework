@@ -16,6 +16,13 @@ typedef NS_ENUM(NSUInteger, MLHTTPMethod) {
     MLHTTP_GET,              //GET请求
 };
 
+typedef NS_ENUM(NSUInteger, MLRequestCachePolicy) {
+    MLIgnoringLocalCacheData = 0,   //忽略缓存，重新请求，默认
+    MLCacheDataDontLoad,            //有缓存就用缓存，没有缓存就不发请求，当做请求出错处理（用于离线模式）
+    MLCacheDataElseLoad,            //有缓存就用缓存，没有缓存就重新请求(用于数据不变时)
+    MLCacheDataThenLoad             //有缓存就先返回缓存，同步请求数据
+};
+
 @interface MLAFRequestItem : NSObject
 
 /**
@@ -34,6 +41,11 @@ typedef NS_ENUM(NSUInteger, MLHTTPMethod) {
  * http请求的参数，默认nil，没有参数
  */
 @property (nonatomic, strong)   id requestParams;
+
+/**
+ http请求的缓存策略，默认MLIgnoringLocalCacheData，忽略缓存
+ */
+@property (nonatomic, assign)   MLRequestCachePolicy cacheType;
 
 /**
  * http请求的头参数，默认@{}，没有参数
