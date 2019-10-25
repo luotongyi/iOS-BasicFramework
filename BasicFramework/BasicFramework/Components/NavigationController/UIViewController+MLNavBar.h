@@ -21,7 +21,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 /**
  加载navBar，最好在添加完所有的view添加
- 也可通过HOOK的方式上线自动放到最上面（还未实现）
+ 也可通过HOOK的方式上线自动放到最上面，但是性能消耗比较大（还未实现）
  */
 - (void)reloadNavigationBar;
 

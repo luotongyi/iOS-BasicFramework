@@ -57,10 +57,12 @@
     
     NSArray *controllers = @[homeNav,homeDetailNav,mineNav];
     NSArray *titles = @[@"首页",@"详情",@"我的"];
+    NSArray *colors = @[UIColor.lightGrayColor,UIColor.lightGrayColor,UIColor.lightGrayColor];
+    NSArray *selectedColors = @[UIColor.redColor,UIColor.purpleColor,UIColor.cyanColor];
     NSArray *images = @[@"icon_home_",@"icon_home_",@"icon_home_"];
     NSArray *selectedImages = @[@"icon_home_sign",@"icon_home_sign",@"icon_home_sign"];
     
-    [tabController addControllers:controllers titles:titles images:images selectedImages:selectedImages];
+    [tabController addControllers:controllers titles:titles colors:colors selectedColors:selectedColors images:images selectedImages:selectedImages];
     
     [self.view addSubview:tabController.view];
 }

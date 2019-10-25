@@ -83,21 +83,21 @@
     
     [_wkWebView addObserver:self forKeyPath:@"estimatedProgress" options:NSKeyValueObservingOptionNew context:nil];
     
-    ML_WEAK_SELF(weakSelf)
+    ML_WEAK_OBJ(self)
     if (@available(iOS 12.0, *)){
         NSString *baseAgent = [_wkWebView valueForKey:@"applicationNameForUserAgent"];
         NSString *userAgent = [NSString stringWithFormat:@"%@ %@",baseAgent,_userAgent];
         [_wkWebView setValue:userAgent forKey:@"applicationNameForUserAgent"];
     }
     [_wkWebView evaluateJavaScript:@"navigator.userAgent" completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-        NSString *newUA = [NSString stringWithFormat:@"%@ %@",result,weakSelf.userAgent];
-        weakSelf.wkWebView.customUserAgent = newUA;
+        NSString *newUA = [NSString stringWithFormat:@"%@ %@",result,weakself.userAgent];
+        weakself.wkWebView.customUserAgent = newUA;
     }];
     [self bridgeHandler];
 }
 
 - (void)bridgeHandler{
-    ML_WEAK_SELF(weakSelf)
+    ML_WEAK_OBJ(self)
     _bridge = [WebViewJavascriptBridge bridgeForWebView:_wkWebView];
     [_bridge setWebViewDelegate:self];
     
@@ -111,7 +111,7 @@
         MLWebController *web = [MLWebController new];
         web.url = url;
         web.params = param;
-        [weakSelf.navigationController pushViewController:web animated:YES];
+        [weakself.navigationController pushViewController:web animated:YES];
         
         NSDictionary *callbackDict = @{@"code":@"0",@"msg":@"跳转成功！",@"result":@{}};
         responseCallback(callbackDict);
@@ -121,10 +121,10 @@
 #pragma mark - 加载返回、刷新按钮
 - (void)createBarItems
 {
-    ML_WEAK_SELF(weakSelf)
+    ML_WEAK_OBJ(self)
     MLNavBarItem *backItem = [MLNavBarItem new];
     [backItem setItemHandler:^{
-        [weakSelf goWebHistory];
+        [weakself goWebHistory];
     }];
     backItem.itemImage = [UIImage imageNamed:@"icon_home_"];
     if (self.navigationController.viewControllers.count > 1) {

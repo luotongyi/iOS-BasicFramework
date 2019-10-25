@@ -18,9 +18,12 @@
 
 - (void)addControllers:(NSArray<UIViewController *> *)controllers
                 titles:(NSArray<NSString *> *)titles
+                colors:(NSArray<UIColor *> *)colors
+        selectedColors:(NSArray<UIColor *> *)selectedColors
                 images:(NSArray<NSString *> *)images
-        selectedImages:(NSArray<NSString *> *)selectedImages{
-    self.mlTabBar = [MLTabBar tabBarWithFrame:self.tabBar.bounds titles:titles images:images selectedImages:selectedImages];
+        selectedImages:(NSArray<NSString *> *)selectedImages;
+{
+    self.mlTabBar = [MLTabBar tabBarWithFrame:self.tabBar.bounds titles:titles colors:colors selectedColors:selectedColors images:images selectedImages:selectedImages];
     self.mlTabBar.mlTabBarDelegate = self;
     [self setValue:self.mlTabBar forKeyPath:@"tabBar"];
     

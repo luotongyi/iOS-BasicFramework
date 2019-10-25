@@ -18,7 +18,11 @@
 #define ML_ITEM_WIDTH       40
 #define ML_ITEM_MARGIN      10
 
-#define ML_WEAK_SELF(weakSelf)           __weak __typeof(&*self)weakSelf = self;
+// weak obj
+#define ML_WEAK_OBJ(type)  __weak typeof(type) weak##type = type;
+// strong obj
+#define ML_STRONG_OBJ(type)  __strong typeof(type) strong##type = weak##type;
+
 #define ML_STRING_FORMAT(string)         [NSString stringWithFormat:@"%@",(string==nil||[string isKindOfClass:[NSNull class]])?@"":string]
 
 

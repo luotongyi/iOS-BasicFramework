@@ -12,9 +12,13 @@
 
 @interface MLTabBar ()
 
-@property (nonatomic, strong)   UIButton *specialBtn;
+//@property (nonatomic, strong)   UIButton *specialBtn;
 
 @property (nonatomic, strong) NSArray<NSString *>      *titleArray;
+
+@property (nonatomic, strong) NSArray<UIColor *>       *colorArray;
+
+@property (nonatomic, strong) NSArray<UIColor *>       *selectedColorArray;
 
 @property (nonatomic, strong) NSArray<NSString *>      *imageArray;
 
@@ -46,10 +50,15 @@
 
 + (instancetype)tabBarWithFrame:(CGRect)frame
                          titles:(NSArray<NSString *> *)titles
+                         colors:(NSArray<UIColor *> *)colors
+                 selectedColors:(NSArray<UIColor *> *)selectedColors
                          images:(NSArray<NSString *> *)images
-                 selectedImages:(NSArray<NSString *> *)selectedImages{
+                 selectedImages:(NSArray<NSString *> *)selectedImages
+{
     MLTabBar *tabBar = [[MLTabBar alloc]initWithFrame:frame];
     tabBar.titleArray = titles;
+    tabBar.colorArray = colors;
+    tabBar.selectedColorArray = selectedColors;
     tabBar.imageArray = images;
     tabBar.selectedImageArray = selectedImages;
     [tabBar realodTabBar];
@@ -73,6 +82,30 @@
     for (int i = 0; i < itemCount; i++) {
         MLTabBarItem *item = [[MLTabBarItem alloc] initWithFrame:CGRectMake(itemX, 0, itemWidth, 49)];
         item.title = self.titleArray[i];
+        if (!self.colorArray || self.colorArray.count == 0) {
+        }
+        else {
+            item.color = self.colorArray[i];
+        }
+        if (!self.selectedColorArray || self.selectedColorArray.count == 0) {
+        }
+        else {
+            item.selectedColor = self.selectedColorArray[i];
+        }
+        /*if (i == 2) {
+            self.specialBtn.frame = CGRectMake(0, -15, itemWidth, 49);
+            //设置“+”按钮的位置
+            [self.specialBtn setImage:[UIImage imageNamed:self.imageArray[i]] forState:UIControlStateNormal];
+            self.specialBtn.selected = YES;
+            [self.specialBtn setImage:[UIImage imageNamed:self.selectedImageArray[i]] forState:UIControlStateSelected];
+            [self.specialBtn addTarget:self action:@selector(sepcialAction) forControlEvents:UIControlEventTouchUpInside];
+            self.specialBtn.adjustsImageWhenHighlighted = NO;
+            [self addSubview:self.specialBtn];
+        }
+        else {
+            item.image = [UIImage imageNamed:self.imageArray[i]];
+            item.selectedImage = [UIImage imageNamed:self.selectedImageArray[i]];
+        }*/
         item.image = [UIImage imageNamed:self.imageArray[i]];
         item.selectedImage = [UIImage imageNamed:self.selectedImageArray[i]];
         item.tag = i;
@@ -83,11 +116,25 @@
         itemX = itemWidth * (i+1);
     }
 }
+/*
+- (void)sepcialAction{
+    self.selectedIndex = 2;
+    if (_mlTabBarDelegate && [_mlTabBarDelegate respondsToSelector:@selector(selectedMLTabBarIndex:)]) {
+        self.specialBtn.selected = YES;
+        [_mlTabBarDelegate selectedMLTabBarIndex:2];
+    }
+}*/
 
 - (void)itemAction:(MLTabBarItem *)item{
     self.selectedIndex = item.tag;
     if (_mlTabBarDelegate && [_mlTabBarDelegate respondsToSelector:@selector(selectedMLTabBarIndex:)]) {
         [_mlTabBarDelegate selectedMLTabBarIndex:item.tag];
+//        if (item.tag == 2) {
+//            self.specialBtn.selected = YES;
+//        }
+//        else {
+//            self.specialBtn.selected = NO;
+//        }
     }
 }
 
@@ -102,13 +149,13 @@
         }
     }];
 }
-/*
+
 #pragma -mark 重写hitTest方法,去监听发布按钮的点击,目的是为了让凸出的部分点击也有反应
-- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
-     * 这一个判断是关键，不判断的话push到其他页面，点击发布按钮的位置也是会有反应的，这样就不好了
-     * self.isHidden == NO 说明当前页面是有tabbar的，那么肯定是在导航控制器的根控制器页面
-     * 在导航控制器根控制器页面，那么我们就需要判断手指点击的位置是否在突出的那个按钮身上
-     * 是的话让发布按钮自己处理点击事件，不是的话让系统去处理点击事件就可以了
+/*- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event {
+     // 这一个判断是关键，不判断的话push到其他页面，点击发布按钮的位置也是会有反应的，这样就不好了
+     // self.isHidden == NO 说明当前页面是有tabbar的，那么肯定是在导航控制器的根控制器页面
+     // 在导航控制器根控制器页面，那么我们就需要判断手指点击的位置是否在突出的那个按钮身上
+     // 是的话让发布按钮自己处理点击事件，不是的话让系统去处理点击事件就可以了
     if (self.hidden) {
         return [super hitTest:point withEvent:event];
     }
@@ -126,15 +173,14 @@
     }
 }
 
+#pragma -mark private
 - (UIButton *)specialBtn{
-    if (_specialBtn) {
+    if (!_specialBtn) {
         _specialBtn = [[UIButton alloc] init];
     }
     return _specialBtn;
-}
-*/
+}*/
 
-#pragma -mark private
 - (NSMutableArray *)itemArray{
     if (!_itemArray) {
         _itemArray = [NSMutableArray array];
@@ -249,6 +295,11 @@
         _badgeLabel.hidden = YES;
     }
     _badgeLabel.text = _badge;
+    
+    //处理第一次进来不展示badge的bug
+    CGFloat imageHeight = 25;
+    CGFloat boundWidth = self.bounds.size.width;
+    self.badgeLabel.frame = CGRectMake((boundWidth-imageHeight)/2+imageHeight-5, 5, 20, 16);
 }
 
 - (void)setImage:(UIImage *)image{

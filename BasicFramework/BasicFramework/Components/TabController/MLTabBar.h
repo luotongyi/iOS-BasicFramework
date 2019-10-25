@@ -29,6 +29,8 @@ NS_ASSUME_NONNULL_BEGIN
 
 + (instancetype)tabBarWithFrame:(CGRect)frame
                          titles:(NSArray<NSString *> *)titles
+                         colors:(NSArray<UIColor *> *)colors
+                 selectedColors:(NSArray<UIColor *> *)selectedColors
                          images:(NSArray<NSString *> *)images
                  selectedImages:(NSArray<NSString *> *)selectedImages;
 
