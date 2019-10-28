@@ -22,13 +22,13 @@
         _headerParams = @{};
         _requestMethod = MLHTTP_POST;
         
-        _encrypt = NO;
-        _encryptKey = @"";
-        
+        _formDataParams = @{};
+        _dataEncodingType = ML_Encoding_URL;
         _showDialog = YES;
+        
+        _filePath = [NSHomeDirectory() stringByAppendingPathComponent:@"Documents"];
     }
     return self;
 }
-
 
 @end

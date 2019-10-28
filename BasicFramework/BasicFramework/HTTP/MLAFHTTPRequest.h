@@ -8,7 +8,6 @@
 
 #import <Foundation/Foundation.h>
 #import "MLAFRequestItem.h"
-#import <AFNetworking/AFNetworking.h>
 
 NS_ASSUME_NONNULL_BEGIN
 /**
@@ -26,6 +25,15 @@ NS_ASSUME_NONNULL_BEGIN
        successBlock:(void (^)(NSURLSessionDataTask *task, id responseObject))success
        failureBlock:(void (^)(NSURLSessionDataTask *task, id errorObject))failure;
 
+/// 网络状态检测
+/// @param statusBlock 网络状态
+/// -1、0、1、2，和AFNetworking保持一致
+/// AFNetworkReachabilityStatusUnknown、AFNetworkReachabilityStatusNotReachable、
+/// AFNetworkReachabilityStatusReachableViaWWAN、AFNetworkReachabilityStatusReachableViaWiFi
++ (void)startCheckNetworking:(void (^)(NSInteger status))statusBlock;
+
+/// 停止网络状态检测
++ (void)stopCheckNetwoking;
 
 @end
 

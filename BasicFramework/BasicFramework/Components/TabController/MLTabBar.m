@@ -147,6 +147,12 @@
         }else {
             item.itemSelected = NO;
         }
+//        if (idx == 2) {
+//            self.specialBtn.selected = YES;
+//        }
+//        else {
+//            self.specialBtn.selected = NO;
+//        }
     }];
 }
 

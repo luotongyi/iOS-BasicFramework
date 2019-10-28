@@ -14,6 +14,15 @@ NS_ASSUME_NONNULL_BEGIN
 typedef NS_ENUM(NSUInteger, MLHTTPMethod) {
     MLHTTP_POST = 0,         //POST请求，默认
     MLHTTP_GET,              //GET请求
+    MLHTTP_FormData,         //MultipartFormData请求，上传图片文件使用
+    MLHTTP_Downdload,        //文件下载
+    MLHTTP_POST_EncodeBody,  //body加密
+};
+
+typedef NS_ENUM(NSUInteger, MLDataEncodingType) {
+    ML_Encoding_URL = 0,         //请求参数编码方式，默认
+    ML_Encoding_JSON,            //JSON格式请求
+    ML_Encoding_PList,           //属性w列表方式
 };
 
 typedef NS_ENUM(NSUInteger, MLRequestCachePolicy) {
@@ -58,14 +67,22 @@ typedef NS_ENUM(NSUInteger, MLRequestCachePolicy) {
 @property (nonatomic, assign)   BOOL         showDialog;
 
 /**
- *  是否开启参数加密，默认NO
+ *  请求参数编码方式，默认 ML_Encoding_URL
  */
-@property (nonatomic, assign)   BOOL         encrypt;
+@property (nonatomic, assign)   MLDataEncodingType  dataEncodingType;
 
 /**
- * 当开启加密时，使用的加密key，默认@""
+ *  文件上传入参，Multi-Part
+ *  在app中多用于图片上传操作
+ *  默认：@{}
  */
-@property (nonatomic, copy  )   NSString     *encryptKey;
+@property (nonatomic, strong) NSDictionary *formDataParams;
+
+/**
+ *  filePath，文件存储路径，默认：Documents/url.lastPathComponent 文件夹
+ *  在app中多用于文件下载操作
+ */
+@property (nonatomic, copy  ) NSString *filePath;
 
 /**
  * http请求的方式，默认post请求
